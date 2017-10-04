@@ -15,5 +15,5 @@ Content:
 - [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/), CC-BY
 
 Presentation Framework:
-- Copyright &copy; 2015 Hakim El Hattab, http://hakim.se
+- Copyright &copy; 2017 Hakim El Hattab, http://hakim.se
 - MIT licensed
