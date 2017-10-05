@@ -700,3 +700,17 @@ IDE files, build dir, local settings, etc...
 + clone an existing project
 + navigate project's history
 + continue working on the project
+
+---
+
+# Version Control with git
+
+### Andrea Galbusera
+
+***
+
+gizero@gmail.com
+
+[@gizero76](https://twitter.com/gizero76)
+
+https://github.com/gizero
