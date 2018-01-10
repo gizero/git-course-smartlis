@@ -47,7 +47,7 @@ https://github.com/gizero/git-course-smartlis/
 
 License:
 
-Copyright &copy; 2017
+Copyright &copy; 2018
 [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/), CC-BY
 
 ---
@@ -286,7 +286,7 @@ Note: try to clarify where git ends and GitHub and friends do begin
 
 Note:
 When we talk about having enterprise work spread across different users/systems
-managers usually and ligitimately turn their nose up... Can we 
+managers usually and ligitimately turn their nose up... Can we
 
 ---
 
@@ -634,6 +634,10 @@ IDE files, build dir, local settings, etc...
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
+Or pick one from https://github.com/github/gitignore
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
 --->
 
 # View history
@@ -706,6 +710,852 @@ IDE files, build dir, local settings, etc...
 # Version Control with git
 
 ### Andrea Galbusera
+
+***
+
+gizero@gmail.com
+
+[@gizero76](https://twitter.com/gizero76)
+
+https://github.com/gizero
+
+---
+
+# Agenda
+
+## Day 2
+- day 1 recap
+- intro to workflows
+- basics of branching
+- workshop
+- more on branching models
+- demo: interactive staging
+- demo: interactive rebase
+- git best practices
+
+---
+
+# Recap
+
+## local commands
+
+    init
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+    add
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+    commit
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+    rm
+
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+    mv
+
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+---
+
+# Recap
+
+## remote commands
+
+    clone
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+    fetch
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+    pull
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+    push
+
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+    remote
+
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+---
+
+# Recap
+
+## query commands
+
+    status
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+    diff
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+    log
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+    blame
+
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
+
+# Recap
+
+## undo commands
+
+    reset
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+    revert
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+    checkout
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+---
+
+# Workflows: what?
+
+- collaboration workflows
+- project management workflows
+
+---
+
+# A Simple Workflow
+Shared repository with two contributors
+
+![Decentralised](assets/02fig02-decentralized.svg)
+
+--->
+
+## A Restricted Access Workflow
+Contributor have no access to the main repository
+
+![Decentralised](assets/02fig06-forking-pull-request.svg.png)
+
+---
+
+# Centralized Workflow
+
+![repo](assets/centralized-04.svg)
+
+--->
+
+# Centralized WF
+
+- flat learning curve for CVCS users
+- allows isolated environment
+- forget about upstream until convenient
+- cheap and robust branch & merging
+
+--->
+
+# Centralized WF
+
+![clone](assets/centralized-05.svg)
+
+--->
+
+# Centralized WF
+
+![John work](assets/centralized-06.svg)
+
+--->
+
+# Centralized WF
+
+![Mary work](assets/centralized-07.svg)
+
+--->
+
+# Centralized WF
+
+![John push](assets/centralized-08.svg)
+
+--->
+
+# Centralized WF
+
+![Mery can't push](assets/centralized-09.svg)
+
+--->
+
+# Centralized WF
+
+![Mery rebase](assets/centralized-10.svg)
+
+--->
+
+# Centralized WF
+
+![Mery conflicts](assets/centralized-12.svg)
+
+--->
+
+# Centralized WF
+
+![Mery push](assets/centralized-14.svg)
+
+---
+
+# Interlude - VCS and the ecosystem
+
+- ticket driven development (issue tracking)
+- milestones
+- code review
+- QA (testing strategies)
+- releases, versioning scheme
+
+--->
+
+# Interlude - VCS and the ecosystem
+
+- deployment strategies
+- documentation (GitHub pages, wikis)
+- continuous integration (CI)
+- continuous deployment
+
+Note: abbiamo delineato in linea di massima chi fa cosa. Ora iniziamo a vedere
+in che modo possiamo affrontare le situazioni che tipicamente si presentano
+durante lo sviluppo di un progetto.
+
+---
+
+# Workflows: why?
+
+- the world is non-linear
+- your work is no exception
+- need to manage complexity
+- branches help keeping different tasks separated
+
+---
+
+# Release schedule
+
+![Releases Timeline](assets/timeline.jpg)
+
+Release frequency influences the branching strategy
+
+The more often you release, the more you need to be using branches to manage
+things
+
+[1] https://goo.gl/3uqZht
+
+---
+
+# Desktop-like software
+
+- few months to a year between releases
+- every release involves significant overhead
+- different versions installed at the same time
+- need to support more then one release
+
+--->
+
+# Desktop-like software
+
+## one branch per release
+
+![desktop-like software](assets/desktop-like-software.jpg)
+
+--->
+
+# Desktop-like software
+
+## consolidation branches
+
+![Consolidation Branches](assets/polishing-branch.jpg)
+
+--->
+
+# Desktop-like software
+
+## ready to release!
+
+![Release Branch](assets/release-branch.jpg)
+
+--->
+
+# Desktop-like software
+
+## oops: here comes the bug
+
+![Critical Fix](assets/critical-fix.jpg)
+
+--->
+
+# Desktop-like software
+
+## non-trivial features
+
+![Feature Branches](assets/feature-branches.jpg)
+
+---
+
+# Web Applications
+
+- little overhead for releasing
+- releasing means deploying
+- user often unaware of versioning
+- usually only one version is maintained
+
+--->
+
+# Web Applications
+
+![Web-like Software](assets/web-like-software.jpg)
+
+--->
+
+# Web Applications
+
+- more importance to feature branches
+- continuous deployment with automation
+- support transparent rollback
+
+---
+
+# Branching & Merging
+
+--->
+
+## How git stores a commit?
+<img src="assets/commit-and-tree.png" width="800px" />
+
+--->
+
+## How does git stores many commits?
+<img src="assets/commits-and-parents.png" width="800px" />
+
+--->
+
+## A branch is a pointer
+<img src="assets/branch-and-history.png" width="800px" />
+
+--->
+
+## Multiple branches
+<img src="assets/two-branches.png" width="800px" />
+
+--->
+
+## Which branch am I on?
+<img src="assets/head-to-master.png" width="700px" />
+## HEAD == master
+
+--->
+
+## Which branch am I on?
+<img src="assets/head-to-testing.png" width="700px" />
+## HEAD == testing
+
+--->
+
+# Recap
+
+## commit consists of
+- Message
+- Author
+- Commiter
+- Date
+- Pointer to tree (snapshot)
+- Pointer to previous commits
+
+--->
+
+# Recap
+
+## branches
+- lightweight movable pointer to one commit
+- when you commit, the branch moves forward, pointing to the new commit
+
+Note: branch in git is actuality a simple file that contains the 40 character SHA–1 checksum of the commit it points to
+
+--->
+
+## Branching is inexpensive
+- creating a new branch is just creating another pointer
+- creating a new branch is as quick as writing 41 bytes to a file (40 characters and a newline)
+- branching is a **local** operation, no server communication is needed
+- switching branches changes the files in the working directory
+- a special pointer called HEAD always points to the current branch
+
+--->
+
+### Create a branch
+    $ git branch <branch_name>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+### Delete a branch
+    $ git branch -d <branch_name>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+### Move to another branch
+    $ git checkout <branch_name>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+### Create a branch and switch to it
+    $ git checkout -b <branch_name>
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+### List branches
+    $ git branch
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+---
+
+# Workshops
+## Requirements
++ working git client (CLI)
++ text editor
+
+---
+
+# Workshop 1
+## Start from scratch
++ create a new project
++ create a few commits on master
++ start working on a new "feature A"
++ implement "feature A" in a different way
++ merge one of the two implementation into master
++ ...
+
+---
+
+# Workshop 2
+## Playground
++ http://onlywei.github.io/explain-git-with-d3/
+
+---
+
+# Branching model
+
+or
+
+# Branching strategy
+
+--->
+
+# A branching model allows to...
+
+- release your code more frequently
+- keep a production ready state of your product
+- don't wait for nobody to push that hotfix
+- better collaborate on features
+
+---
+
+# Examples of branching models
+
+--->
+
+# Topic branches
+
+You should branch everytime you do something new
+
++ fixes
++ features
++ experiments
+
+--->
+
+# Long-running branches
++ always-stable master as production branch
++ stable release versions maintainance branches
+
+--->
+
+## A successful/common model
+<a href="http://nvie.com/posts/a-successful-git-branching-model/">
+    <img src="assets/branching_model.png" width="400px" />
+</a>
+
+---
+
+# Choosing branching model
+
++ Where do important phases of development occur?
++ How can you identify (and backport) groups of related change?
++ Do you have work which often needs to be updated in multiple distinct long-lived branches?
+
+---
+
+# Choosing branching model
+
++ What happens when emergency patches are required?
++ What should a branch for a particular purpose (including user-tactical) be named?
++ What is the lifecycle of a branch?
+
+---
+
+# Sample scenario
++ governance: master = production branch
++ development style: ticket driven
++ work on a web site
++ create a branch for a new story you're working on
++ do some work in that branch, then...
+
+--->
+
+# Boss calls for a hotfix
++ revert back to your production branch
++ create a branch to add the hotfix
++ after it's tested, merge the hotfix branch, and push to production
++ switch back to your original story and continue working
+
+--->
+
+## In the begining...
+<img src="assets/branch_example1.png" width="400px" />
+
+--->
+
+## Start working on issue #53
+    $ git checkout -b iss53
+    Switched to a new branch "iss53"
+<img src="assets/branch_example2.png" width="400px" />
+
+--->
+
+## Do some work
+    $ $EDITOR index.html
+    $ git commit -a -m 'added a new footer [issue 53]'
+<img src="assets/branch_example3.png" width="450px" />
+
+--->
+
+## Boss calls - Back to master
+    $ git checkout master
+    Switched to branch "master"
+
+--->
+
+## Fixing the problem
+    $ git checkout -b hotfix
+    Switched to a new branch "hotfix"
+    $ $EDITOR index.html
+    $ git commit -a -m 'fixed the broken email address'
+    [hotfix]: created 3a0874c: "fixed the broken email address"
+     1 files changed, 0 insertions(+), 1 deletions(-)
+<img src="assets/branch_example4.png" width="450px" />
+
+--->
+
+## Merge hotfix to master
+    $ git checkout master
+    $ git merge hotfix
+    Updating f42c576..3a0874c
+    Fast forward
+     index.html |    1 -
+     1 files changed, 0 insertions(+), 1 deletions(-)
+<img src="assets/branch_example5.png" width="400px" />
+
+--->
+
+## Let's continue working on issue #53
+    $ git checkout iss53
+    Switched to branch "iss53"
+    $ $EDITOR index.html
+    $ git commit -a -m 'finished the new footer [issue 53]'
+    [iss53]: created ad82d7a: "finished the new footer [issue 53]"
+     1 files changed, 1 insertions(+), 0 deletions(-)
+<img src="assets/branch_example6.png" width="500px" />
+
+--->
+
+## Time to merge into master
+    $ git checkout master
+    $ git merge iss53
+    Merge made by recursive.
+     index.html |    1 +
+     1 files changed, 1 insertions(+), 0 deletions(-)
+<img src="assets/branch_example7.png" width="500px" />
+
+--->
+
+## The end result
+<img src="assets/branch_example8.png" width="600px" />
+
+--->
+
+## Conflicts
+    $ git merge iss53
+    Auto-merging index.html
+    CONFLICT (content): Merge conflict in index.html
+    Automatic merge failed; fix conflicts and then commit the result.
+
+<br>
+
+## Checking the status
+    $ git status
+    index.html: needs merge
+    # On branch master
+    # Changes not staged for commit:
+    #   (use "git add <file>..." to update what will be committed)
+    #   (use "git checkout -- <file>..." to discard changes in working directory)
+    #
+    #   unmerged:   index.html
+    #
+
+--->
+
+## Conflict example
+    <<<<<<< HEAD:index.html
+    <div id="container">Awesome!</div>
+    =======
+    <div id="container">
+        Cool!
+    </div>
+    >>>>>>> iss53:index.html
+
+__Remember:__ `HEAD` is what you checked out before running merge command
+
+--->
+
+## Mark file as resolved
+    $ git add <filename>
+<br>
+## With external merge tool
+    $ git mergetool
+<br>
+## Continue merge after solving conflicts
+    $ git commit
+
+--->
+
+# Rebasing
+
++ reapplying a diverging branch onto another
++ after rebasing, a merge of master with "experiment" will fast-forward master
++ use when explicit merge commits are not desirable
++ has drawbacks (rewrites history)
+
+--->
+
+# Rebasing
+
+    git checkout experiment
+    git rebase master
+
+--->
+
+## How rebase works
+1. finds the common ancestor of the two branches (base)
+2. gets the diff of each commit of the branch you're on, from the base
+3. saves those diffs to temporary files
+4. resets the current branch to the same commit as the branch you are rebasing onto
+5. applies each change (diff) in turn
+
+--->
+
+## Example
+<img src="assets/rebasing_example1.png" width="500px" />
+
+--->
+
+## Merge
+<img src="assets/rebasing_example2.png" width="500px" />
+
+--->
+
+## Rebase - Step #1
+    $ git checkout experiment
+    $ git rebase master
+    First, rewinding head to replay your work on top of it...
+    Applying: added staged command
+<img src="assets/rebasing_example3.png" width="600px" />
+
+--->
+
+## Rebase - Step #2
+    $ git checkout master
+    $ git merge experiment
+<img src="assets/rebasing_example4.png" width="600px" />
+
+--->
+
+## A more interesting rebase
+<img src="assets/rebasing_example5.png" width="600px" />
+
+--->
+
+## Integrate the client changes to master
+<img src="assets/rebasing_example6.png" width="700px" />
+
+--->
+
+# Rebase while pulling
+
+    $ git pull --rebase origin master
+
+--->
+
+# Rebase vs Merge
+
++ rebasing replays changes from one line of work onto another in the order they were introduced
++ merging takes the endpoints and merges them together
++ the only difference between merging and rebasing is the resulting history, not the content
+
+--->
+
+# Rebase vs Merge
+
++ dont't rebase pushed branches (unless allowed by your policy)
++ rebase to polish your history (interactive rebase)
++ rebase to keep up-to-date feature branches in a cleaner way
++ ...otherwise merge
+
+---
+
+# For the future
+
++ Interactive staging (`git add -p`)
++ Interactive rebasing (`git rebase -i`)
++ Stashing
++ Cherry-pick
++ hooks
+
+---
+
+# Best Practices
+
+--->
+
+# Best Practices
+
+Always run 'diff' before committing
+
+--->
+
+# Best Practices
+
+Read diffs from other developers
+
++ you can learn something
++ informal review
+
+--->
+
+# Best Practices
+
+Keep your repos as small as possible
+
++ minimal set of "sources"
++ never store generated files
++ store content, not representations
++ maintain your .gitignore
+
+--->
+
+# Best Practices
+
+Organize commits into logically related changes
+
++ no more than one "task" per commit
++ no less then one "task" per commit
++ commit semantically
+
+--->
+
+# Best Practices
+## Commit log messages
++ <50 chars short summary (`git log --online`)
++ blank line
++ more in-depth description (wrap at 72 chars)
+
+--->
+
+# Best Practices
+## Commit log messages
++ the body should answer these questions:
+  - what was the motivation for this change?
+  - how does it differ from previous implementation?
++ use imperative present tense for verbs
++ keep references to tickets/issues/bugs
+
+--->
+
+# Best Practices
+## Example commit log message
+
+--->
+
+# Best Practices
+## Commit log messages
++ consider enforcing standards with hooks
+
+--->
+
+# Best Practices
+
++ don't commit half-done work
++ ...or at least consider rebasing later
++ VCS != backup system
+
+--->
+
+# Best Practices
+
+Don't comment code: just delete it
+
+- tools allow for easy recovery if needed
+- keep things more readable
+- can have performance inpact in sources for the web
+
+--->
+
+# Best Practices
+
+Choose a workflow
+
++ take your time to experiment with different options
++ build your team around this decision
++ once you agree ensure everyone follows
+
+--->
+
+# Best Practices
+
+If you chose master == production workflows, always use origin/master instead of your local master
+
+    $ git checkout -b dev-[issue_num]-short-description origin/master
+
+--->
+
+# Best Practices
+
+Read (continuously) about git online
++ https://git-scm.com/book/en/v2
++ http://sethrobertson.github.io/GitBestPractices/
++ and many many others...
++ then...
+
+--->
+
+# Best Practices
+
+**Choose** and **document** your workflows/practices
+
+---
+
+# Q/A
+
+---
+
+# Thank you!
 
 ***
 
