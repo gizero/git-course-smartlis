@@ -721,6 +721,21 @@ https://github.com/gizero
 
 ---
 
+This presentation is available at:
+
+http://gizero.github.io/git-course-smartlis/
+
+Sources:
+
+https://github.com/gizero/git-course-smartlis/
+
+License:
+
+Copyright &copy; 2018
+[Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/), CC-BY
+
+---
+
 # Agenda
 
 ## Day 2
@@ -728,9 +743,8 @@ https://github.com/gizero
 - intro to workflows
 - basics of branching
 - workshop
-- more on branching models
-- demo: interactive staging
-- demo: interactive rebase
+- more on branch & merge
+- choosing workflows
 - git best practices
 
 ---
@@ -739,25 +753,33 @@ https://github.com/gizero
 
 ## local commands
 
-    init
+    help
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-    add
+    config
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-    commit
+    init
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-    rm
+    add
 
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
-    mv
+    commit
 
 <!-- .element: class="fragment" data-fragment-index="5" -->
+
+    rm
+
+<!-- .element: class="fragment" data-fragment-index="6" -->
+
+    mv
+
+<!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---
 
@@ -832,6 +854,11 @@ https://github.com/gizero
 - collaboration workflows
 - project management workflows
 
+Note: different collaboration workflows involve different number of git repos
+with usually different access policies. Will see a two examples in the next
+slides. More on how to choose the prj management workflows that best fits later
+on today.
+
 ---
 
 # A Simple Workflow
@@ -861,53 +888,101 @@ Contributor have no access to the main repository
 - forget about upstream until convenient
 - cheap and robust branch & merging
 
+Note: the Centralized Workflow uses a central repository to serve as the single
+point-of-entry for all changes to the project. the default development branch
+is called master. This workflow doesn’t involve any other branches on the
+server besides master.
+
 --->
 
 # Centralized WF
 
 ![clone](assets/centralized-05.svg)
 
---->
+git clone
 
-# Centralized WF
-
-![John work](assets/centralized-06.svg)
+Note: ...still it allows for minimal team collaboration.
 
 --->
 
 # Centralized WF
 
-![Mary work](assets/centralized-07.svg)
+![Alice work](assets/centralized-06.svg)
+
+git add/commit
+
+Note: Alice works on her feature in her local repository
 
 --->
 
 # Centralized WF
 
-![John push](assets/centralized-08.svg)
+![Bob work](assets/centralized-07.svg)
+
+git add/commit
+
+Note: Meanwhile Bob works on his feature in his local private repository
 
 --->
 
 # Centralized WF
 
-![Mery can't push](assets/centralized-09.svg)
+![Alice push](assets/centralized-08.svg)
+
+git push
+
+Note: Alice finishes her feature and publishes it with push
 
 --->
 
 # Centralized WF
 
-![Mery rebase](assets/centralized-10.svg)
+![Bob can't push](assets/centralized-09.svg)
+
+git push (fails!)
+
+Note: When Bob tries to publish git will refuse the request with a rather
+verbose error message, preventing Bob from overwriting official commits. He
+needs to pull Alice’s updates into his repository, integrate them with his local
+changes, and then try again.
 
 --->
 
 # Centralized WF
 
-![Mery conflicts](assets/centralized-12.svg)
+![Bob rebase](assets/centralized-10.svg)
+
+git pull --rebase origin master
+
+Note: The --rebase option tells Git to move all of Bob’s commits to the tip of
+the master branch after synchronising it with the changes from the central
+repository
 
 --->
 
 # Centralized WF
 
-![Mery push](assets/centralized-14.svg)
+![Bob conflicts](assets/centralized-12.svg)
+
+git add/git rebase --continue
+
+Note: rebase can cause conflicts!
+
+--->
+
+# Centralized WF
+
+![Bob push](assets/centralized-14.svg)
+
+git push
+
+Note: Bob will be able to publish his changes successfully
+The Centralized Workflow is essentially a building block for other Git
+workflows. Most popular Git workflows will have some sort of centralized repo
+that individual developers will push and pull from. Below we will briefly
+discuss some other popular Git workflows. These extended workflows offer more
+specialized patterns in regard to managing branches for feature development,
+hot fixes, and eventual release
 
 ---
 
@@ -1114,6 +1189,23 @@ Note: branch in git is actuality a simple file that contains the 40 character SH
 ### List branches
     $ git branch
 <!-- .element: class="fragment" data-fragment-index="5" -->
+
+---
+
+# git merge
+
+"Incorporates changes from the named commits (since the time their histories
+diverged from the current branch) into the current branch"
+
+--->
+
+# git merge
+
+    $ git merge <branchname>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+    $ git merge <commit>
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -1334,7 +1426,7 @@ __Remember:__ `HEAD` is what you checked out before running merge command
 ## Continue merge after solving conflicts
     $ git commit
 
---->
+---
 
 # Rebasing
 
@@ -1342,13 +1434,21 @@ __Remember:__ `HEAD` is what you checked out before running merge command
 + after rebasing, a merge of master with "experiment" will fast-forward master
 + use when explicit merge commits are not desirable
 + has drawbacks (rewrites history)
++ conflicts must be handled with a different approach
 
 --->
 
-# Rebasing
+# git rebase
 
-    git checkout experiment
-    git rebase master
+"Incorporates changes from the named commits (since the time their histories
+diverged from the current branch) into the current branch"
+
+--->
+
+# git rebase
+
+    git checkout <ourbranch>
+    git rebase <theirbranch>
 
 --->
 
@@ -1408,6 +1508,7 @@ __Remember:__ `HEAD` is what you checked out before running merge command
 + rebasing replays changes from one line of work onto another in the order they were introduced
 + merging takes the endpoints and merges them together
 + the only difference between merging and rebasing is the resulting history, not the content
++ rebase catches merge conflicts on a commit-by-commit
 
 --->
 
