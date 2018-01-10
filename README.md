@@ -11,7 +11,7 @@ It can also be rendered locally as follows:
 ## License
 
 Content:
-- Copyright &copy; 2017
+- Copyright &copy; 2018
 - [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/), CC-BY
 
 Presentation Framework:
