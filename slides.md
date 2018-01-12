@@ -1147,7 +1147,7 @@ things
 - Commiter
 - Date
 - Pointer to tree (snapshot)
-- Pointer to previous commits
+- Pointer to previous commit(s)
 
 --->
 
